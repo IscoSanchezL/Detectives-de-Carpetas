@@ -483,6 +483,45 @@
     gap:12px;
   }
 
+  /* Enlaces, guía rápida y teclas */
+  .meta-value a{color:var(--blue-deep); text-decoration:underline; text-underline-offset:3px;}
+  a.btn{display:inline-block; text-decoration:none; margin-top:12px;}
+  kbd{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    background:var(--soft);
+    border:1px solid var(--line);
+    border-radius:5px;
+    padding:1px 5px;
+    white-space:nowrap;
+  }
+  .guide{
+    margin-top:16px;
+    border:1px solid var(--line);
+    border-radius:12px;
+    background:var(--card);
+    overflow:hidden;
+  }
+  .guide summary{
+    cursor:pointer;
+    padding:14px 18px;
+    font-weight:600;
+    font-size:15px;
+    color:var(--blue-deep);
+    list-style:none;
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .guide summary::-webkit-details-marker{display:none;}
+  .guide summary::before{content:'▸'; color:var(--gray); font-size:14px; transition:transform .2s ease;}
+  .guide[open] summary{background:var(--blue-pale);}
+  .guide[open] summary::before{transform:rotate(90deg); color:var(--blue-deep);}
+  .guide-body{padding:16px 18px 18px;}
+  .guide-body p{margin:0 0 14px; font-size:13.5px; line-height:1.65; color:var(--ink-soft);}
+  .guide table{min-width:560px;}
+  .guide td:first-child{font-weight:600; color:var(--ink);}
+
   @media (max-width:620px){
     header{padding:36px 24px 24px;}
     section{padding:26px 24px;}
@@ -524,7 +563,7 @@
       </div>
       <div class="meta-cell">
         <div class="meta-label">ARCHIVO</div>
-        <div class="meta-value">Caso_Detective.zip</div>
+        <div class="meta-value"><a href="Caso_Detective.zip" download>Caso_Detective.zip</a></div>
       </div>
     </div>
   </header>
@@ -538,7 +577,7 @@
   <section>
     <h2><span class="num">2</span> Lo que necesitan</h2>
     <ul class="materials" id="materials">
-      <li><label class="tick"><input type="checkbox" class="tick-input"><span>El archivo Caso_Detective.zip, ya descargado</span></label></li>
+      <li><label class="tick"><input type="checkbox" class="tick-input"><span>El archivo Caso_Detective.zip (se descarga desde esta página)</span></label></li>
       <li><label class="tick"><input type="checkbox" class="tick-input"><span>Su computador</span></label></li>
       <li><label class="tick"><input type="checkbox" class="tick-input"><span>Un documento o papel, para realizar anotaciones</span></label></li>
       <li><label class="tick"><input type="checkbox" class="tick-input"><span>Veinte minutos sin interrupciones</span></label></li>
@@ -571,6 +610,26 @@
       <button type="button" class="btn small ghost" id="btnToggleAll">Expandir todos</button>
     </div>
     <div class="timeline" id="timeline"></div>
+    <details class="guide">
+      <summary>Guía rápida: cómo se hace en tu computador</summary>
+      <div class="guide-body">
+        <p><strong>Antes de empezar, activa la vista de extensiones</strong> para ver si un archivo termina en .pdf, .docx, .xlsx o .jpg.<br>
+        Windows 11: pestaña <em>Ver → Mostrar → Extensiones de nombre de archivo</em>. Windows 10: pestaña <em>Vista</em> y marca <em>Extensiones de nombre de archivo</em>.
+        Mac: en Finder, <em>Configuración → Avanzado → Mostrar todas las extensiones de nombre de archivo</em>.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Acción</th><th>Windows</th><th>Mac</th></tr></thead>
+            <tbody>
+              <tr><td>Descomprimir el zip</td><td>Clic derecho sobre el .zip → <em>Extraer todo…</em> → <em>Extraer</em></td><td>Doble clic sobre el .zip</td></tr>
+              <tr><td>Crear una carpeta</td><td>Clic derecho en un espacio vacío → <em>Nuevo → Carpeta</em>, o <kbd>Ctrl</kbd>+<kbd>Mayús</kbd>+<kbd>N</kbd></td><td><kbd>Cmd</kbd>+<kbd>Mayús</kbd>+<kbd>N</kbd> dentro de la ventana de Finder</td></tr>
+              <tr><td>Renombrar</td><td>Selecciona el archivo y pulsa <kbd>F2</kbd></td><td>Selecciona el archivo y pulsa <kbd>Retorno</kbd></td></tr>
+              <tr><td>Mover a una carpeta</td><td>Arrástralo a la carpeta, o <kbd>Ctrl</kbd>+<kbd>X</kbd> y luego <kbd>Ctrl</kbd>+<kbd>V</kbd> dentro de la carpeta</td><td>Arrástralo a la carpeta, o <kbd>Cmd</kbd>+<kbd>C</kbd> y luego <kbd>Opción</kbd>+<kbd>Cmd</kbd>+<kbd>V</kbd> dentro de la carpeta</td></tr>
+              <tr><td>Eliminar</td><td>Selecciona el archivo y pulsa <kbd>Supr</kbd> (va a la Papelera de reciclaje)</td><td>Selecciona el archivo y pulsa <kbd>Cmd</kbd>+<kbd>Borrar</kbd> (va a la Papelera)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </details>
     <div class="sr-only" id="live" aria-live="polite"></div>
   </section>
 
@@ -643,11 +702,11 @@
 
   /* ---------- Datos ---------- */
   const steps = [
-    { time: "2 min", min: 2, title: "Conocemos el caso", body: "Un compañero se fue de vacaciones y dejó su carpeta totalmente desorganizada y compartió el enlace del zip." },
-    { time: "3 min", min: 3, title: "Descargamos y descomprimimos", body: "Descargan el zip y lo extraen en su computador. Si tienen dudas, revisamos juntos cómo hacerlo." },
-    { time: "5 min", min: 5, title: "Exploramos e identificamos", body: "Revisen cada archivo: qué tipo es, a qué categoría pertenece y si hay algo que no debería estar ahí." },
-    { time: "6 min", min: 6, title: "Reorganizamos", body: "Crean las carpetas que necesiten y mueven cada archivo a su lugar, renombrando los que tengan nombres poco claros." },
-    { time: "3 min", min: 3, title: "Verificamos juntos", body: "Pueden compartir pantalla para mostrar cómo les quedó la carpeta. Comparamos aciertos." },
+    { time: "1 min", min: 1, title: "Conocemos el caso", body: "Un compañero se fue de vacaciones y dejó su carpeta totalmente desorganizada. Hoy la ordenamos nosotros." },
+    { time: "2 min", min: 2, title: "Descargamos y descomprimimos", body: "Descarguen el zip desde esta página y extráiganlo en su computador. En la Guía rápida, más abajo, está cómo hacerlo en Windows y en Mac.", extra: '<a class="btn small" href="Caso_Detective.zip" download>Descargar Caso_Detective.zip</a>' },
+    { time: "5 min", min: 5, title: "Exploramos e identificamos", body: "Activen la vista de extensiones (.pdf, .docx, .xlsx…) y revisen cada archivo: qué tipo es, a qué categoría pertenece y si hay algo que no debería estar ahí. Pueden practicar en el Modo detective de la sección 4." },
+    { time: "7 min", min: 7, title: "Reorganizamos", body: "Crean las carpetas que necesiten, mueven cada archivo a su lugar y renombran los que tengan nombres poco claros. Si no recuerdan cómo, abran la Guía rápida." },
+    { time: "4 min", min: 4, title: "Verificamos juntos", body: "Dos o tres personas comparten pantalla para mostrar cómo les quedó la carpeta. Comparamos aciertos con la solución." },
     { time: "1 min", min: 1, title: "Cerramos con una pregunta", body: "¿Por qué es importante mantener los archivos organizados y bien nombrados?", answer: true },
   ];
 
@@ -737,6 +796,7 @@
         <div class="step-body-wrap">
           <div class="step-body-inner">
             ${s.body}
+            ${s.extra ? `<div>${s.extra}</div>` : ''}
             ${s.answer ? `
               <label class="answer-label" for="answer">Tu respuesta</label>
               <textarea class="answer" id="answer" rows="3" placeholder="Escribe aquí lo que piensas..."></textarea>
